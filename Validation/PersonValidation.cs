@@ -75,8 +75,15 @@ namespace BudgetPlanner.Validation
                     if (db.Expenses.Any(e => e.Person.Id == id))
                     {
                         // remove all expenses for user by id
-                        var list = db.Expenses.Where(e => e.Person.Id == id);
-                        db.Expenses.RemoveRange(list);
+                        var listOfExpenses = db.Expenses.Where(e => e.Person.Id == id);
+                        db.Expenses.RemoveRange(listOfExpenses);
+                    }
+                    // check if person have some income
+                    if (db.Incomes.Any(e => e.Person.Id == id))
+                    {
+                        // remove all incomes for user by id
+                        var listofIncomes = db.Incomes.Where(e => e.Person.Id == id);
+                        db.Incomes.RemoveRange(listofIncomes);
                     }
                     if (db.People.Find(id) != null)
                     {

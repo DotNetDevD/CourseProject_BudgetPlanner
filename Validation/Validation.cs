@@ -16,6 +16,29 @@ namespace BudgetPlanner.Validation
         public abstract void Remove();
         public abstract void Alter();
         public abstract void Show();
+        public void ShowStatistics()
+        {
+            if (PersonValidation.IsUser())
+            {
+                using (MyBudgetPlannerContext db = new())
+                {
+                    new PersonValidation().Show();
+                    Console.WriteLine("Choose Id User for show statistics");
+                    int id = (int)CorrectNumber();
+                    if (db.People.Find(id) != null)
+                    {
+                        BudgetStatistic bs = new();
+                        bs.GetPersonIncome(id);
+                        bs.GetPersonExpense(id);
+                        bs.GetPersonRevenue(id);
+                    }
+                    else
+                        Console.WriteLine($"Not found user with ID = {id}");
+                }
+            }
+            else
+                Console.WriteLine("No users available for show statistics.");
+        }
         public static string CorrectString()
         {
             string? data = Console.ReadLine();

@@ -24,7 +24,7 @@ namespace BudgetPlanner.Validation
                 Console.Write("Еnter your Surname: ");
                 user.Surname = CorrectString();
                 Console.Write("Еnter your age: ");
-                user.Age = (int)CorrectNumber();
+                user.Age = ValidAge();
 
                 // add new user to DB
                 db.People.Add(user);
@@ -50,7 +50,7 @@ namespace BudgetPlanner.Validation
                             Console.Write("Change Surname: ");
                             changeUser.Surname = CorrectString();
                             Console.Write("Change age: ");
-                            changeUser.Age = (int)CorrectNumber();
+                            changeUser.Age = ValidAge();
                         }
                     }
                     else
@@ -109,6 +109,7 @@ namespace BudgetPlanner.Validation
                     Console.WriteLine("No users available at this moment.");
             }
         }
+
         public static bool IsUser()
         {
             bool isUsersInDB;
@@ -118,6 +119,19 @@ namespace BudgetPlanner.Validation
                 isUsersInDB = users.Count > 0 ? true : false;
             }
             return isUsersInDB;
+        }
+        public int ValidAge()
+        {
+            int age = (int)CorrectNumber();
+
+            bool isValid = (age > 0 || age < 110) ? true : false;
+            if (!isValid)
+            {
+                Console.Write("Incorrect input, age cannot be less 0 and more 110\n" +
+                    "Еnter your age one more time: ");
+                ValidAge();
+            }
+            return age;
         }
     }
 }

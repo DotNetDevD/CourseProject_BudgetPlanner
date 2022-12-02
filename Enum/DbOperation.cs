@@ -11,7 +11,8 @@ namespace BudgetPlanner.Enum
         Add = 1,
         Alter = 2,
         Remove = 3,
-        Show = 4
+        Show = 4,
+        ShowStatistics = 5
     }
 }
 

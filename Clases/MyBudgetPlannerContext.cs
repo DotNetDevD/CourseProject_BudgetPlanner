@@ -66,9 +66,7 @@ public partial class MyBudgetPlannerContext : DbContext
         modelBuilder.Entity<Person>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Person__3214EC07E2BC5A00");
-
             entity.ToTable("Person");
-
             entity.Property(e => e.Name).HasMaxLength(20);
             entity.Property(e => e.Surname).HasMaxLength(20);
         });

@@ -1,12 +1,13 @@
 ﻿using BudgetPlanner.DbModels;
 using Microsoft.EntityFrameworkCore;
 
-namespace BudgetPlanner.Clases;
+namespace BudgetPlanner.DAL;
 
 public partial class MyBudgetPlannerContext : DbContext
 {
     public MyBudgetPlannerContext()
     {
+        Database.EnsureCreated();
     }
 
     public MyBudgetPlannerContext(DbContextOptions<MyBudgetPlannerContext> options)

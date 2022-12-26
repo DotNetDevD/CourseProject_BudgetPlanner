@@ -1,4 +1,4 @@
-﻿using BudgetPlanner.Clases;
+﻿using BudgetPlanner.DAL;
 using BudgetPlanner.DbModels;
 using BudgetPlanner.Interfaces;
 using System;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BudgetPlanner.Validation
 {
-    internal class IncomeValidation : Validation
+    internal class IncomeManager : DbManager
     {
         public override string? DataBaseName { get; set; } = "Income";
 
@@ -40,7 +40,7 @@ namespace BudgetPlanner.Validation
             {
                 using (MyBudgetPlannerContext db = new())
                 {
-                    new IncomeValidation().Show();
+                    new IncomeManager().Show();
                     Console.WriteLine("Choose ID income for change");
                     int id = (int)CorrectNumber();
                     if (db.Incomes.Find(id) != null)
@@ -68,7 +68,7 @@ namespace BudgetPlanner.Validation
             {
                 using (MyBudgetPlannerContext db = new())
                 {
-                    new IncomeValidation().Show();
+                    new IncomeManager().Show();
                     Console.WriteLine("Choose ID for remove income.");
                     int id = (int)CorrectNumber();
                     if (db.Incomes.Find(id) != null)
@@ -87,9 +87,9 @@ namespace BudgetPlanner.Validation
         {
             using (MyBudgetPlannerContext db = new())
             {
-                var incomes = db.Incomes.ToList();
                 if (IsIncome())
                 {
+                    var incomes = db.Incomes.ToList();
                     foreach (var income in incomes)
                     {
                         //Find person who has income
@@ -106,8 +106,7 @@ namespace BudgetPlanner.Validation
             bool isIncomeInDB;
             using (MyBudgetPlannerContext db = new())
             {
-                var income = db.Incomes.ToList();
-                isIncomeInDB = income.Count > 0 ? true : false;
+                isIncomeInDB = db.Incomes.Any();
             }
             return isIncomeInDB;
         }

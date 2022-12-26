@@ -1,6 +1,6 @@
 ﻿using BudgetPlanner.Clases;
 using BudgetPlanner.Validation;
-using DataBase = BudgetPlanner.Validation.Validation;
+using DataBase = BudgetPlanner.Validation.DbManager;
 
 Console.WriteLine("Welcome to Budget planner APP!");
 WorkWithDB start = new();

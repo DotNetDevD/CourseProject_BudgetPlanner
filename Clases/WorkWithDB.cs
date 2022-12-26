@@ -1,4 +1,5 @@
 ﻿using BudgetPlanner.Enum;
+using BudgetPlanner.Properties;
 using BudgetPlanner.Validation;
 using Data = BudgetPlanner.Validation;
 
@@ -8,7 +9,7 @@ namespace BudgetPlanner.Clases
     {
         private int _choose;
         private const int _exit = 0;
-        private string[] _operationList = { "Perss 1 to ADD ",
+        private string[] _operationList = { Resources.Add,
                                             "Perss 2 to ALTER ",
                                             "Perss 3 to REMOVE ",
                                             "Press 4 to SHOW "};
@@ -16,7 +17,7 @@ namespace BudgetPlanner.Clases
                                      "Perss 1 to add Person",
                                      "Perss 2 to add Expense",
                                      "Perss 3 to add Income"};
-        public void ShowOperation(Data.Validation validData)
+        public void ShowOperation(Data.DbManager validData)
         {
             Console.WriteLine("Press 0 to EXIT");
             foreach (var operation in _operationList)
@@ -32,22 +33,22 @@ namespace BudgetPlanner.Clases
                 Console.WriteLine(db);
             }
         }
-        public Data.Validation? WorkWithDb()
+        public Data.DbManager? WorkWithDb()
         {
-            Data.Validation? setDb = null;
+            Data.DbManager? setDb = null;
             Console.WriteLine("Choose database for work");
             ShowDB();
             int.TryParse(Console.ReadLine(), out _choose);
             switch (_choose)
             {
                 case (int)DbSet.Person:
-                    setDb = new PersonValidation();
+                    setDb = new PersonManager();
                     break;
                 case (int)DbSet.Expense:
-                    setDb = new ExpenseValidation();
+                    setDb = new ExpenseManager();
                     break;
                 case (int)DbSet.Income:
-                    setDb = new IncomeValidation();
+                    setDb = new IncomeManager();
                     break;
                 case _exit:
                     Console.Clear();
@@ -61,7 +62,7 @@ namespace BudgetPlanner.Clases
             }
             return setDb;
         }
-        public void WorkWithEntity(Data.Validation validData)
+        public void WorkWithEntity(Data.DbManager validData)
         {
             if (validData is not null)
             {

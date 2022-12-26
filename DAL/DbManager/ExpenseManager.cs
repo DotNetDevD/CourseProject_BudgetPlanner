@@ -1,4 +1,4 @@
-﻿using BudgetPlanner.Clases;
+﻿using BudgetPlanner.DAL;
 using BudgetPlanner.DbModels;
 using BudgetPlanner.Interfaces;
 using System;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BudgetPlanner.Validation
 {
-    internal class ExpenseValidation : Validation, IShowData
+    internal class ExpenseManager : DbManager, IShowData
     {
         public override string? DataBaseName { get; set; } = "Expense";
         public override void Add()
@@ -39,7 +39,7 @@ namespace BudgetPlanner.Validation
             {
                 using (MyBudgetPlannerContext db = new())
                 {
-                    new ExpenseValidation().Show();
+                    new ExpenseManager().Show();
                     Console.WriteLine("Choose ID for remove expense.");
                     int id = (int)CorrectNumber();
                     if (db.Expenses.Find(id) != null)
@@ -61,7 +61,7 @@ namespace BudgetPlanner.Validation
             {
                 using (MyBudgetPlannerContext db = new())
                 {
-                    new ExpenseValidation().Show();
+                    new ExpenseManager().Show();
                     Console.WriteLine("Choose ID expense for change");
                     int id = (int)CorrectNumber();
                     if (db.Expenses.Find(id) != null)
@@ -106,8 +106,7 @@ namespace BudgetPlanner.Validation
             bool isExpenseInDB;
             using (MyBudgetPlannerContext db = new())
             {
-                var expense = db.Expenses.ToList();
-                isExpenseInDB = expense.Count > 0 ? true : false;
+                isExpenseInDB = db.Expenses.Any();
             }
             return isExpenseInDB;
         }

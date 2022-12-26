@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BudgetPlanner.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,15 +16,11 @@ namespace BudgetPlanner.Clases
         {
             using (MyBudgetPlannerContext db = new())
             {
-                // check if person have some income
-                if (db.Incomes.Any(e => e.Person.Id == id))
+                // remove all incomes for user by id
+                var listofIncomes = db.Incomes.Where(e => e.Person.Id == id);
+                foreach (var income in listofIncomes)
                 {
-                    // remove all incomes for user by id
-                    var listofIncomes = db.Incomes.Where(e => e.Person.Id == id);
-                    foreach (var income in listofIncomes)
-                    {
-                        _totalIncome += income.CountIncome;
-                    }
+                    _totalIncome += income.CountIncome;
                 }
                 Console.WriteLine($"Total user incomes with ID:{id} = {_totalIncome}.");
             }
@@ -32,15 +29,11 @@ namespace BudgetPlanner.Clases
         {
             using (MyBudgetPlannerContext db = new())
             {
-                // check if person have some expenses
-                if (db.Expenses.Any(e => e.Person.Id == id))
+                // remove all expenses for user by id
+                var listOfExpenses = db.Expenses.Where(e => e.Person.Id == id);
+                foreach (var income in listOfExpenses)
                 {
-                    // remove all expenses for user by id
-                    var listOfExpenses = db.Expenses.Where(e => e.Person.Id == id);
-                    foreach (var income in listOfExpenses)
-                    {
-                        _totalExpense += income.CountExpenses;
-                    }
+                    _totalExpense += income.CountExpenses;
                 }
                 Console.WriteLine($"Total user expenses with ID:{id} = {_totalExpense}.");
             }
